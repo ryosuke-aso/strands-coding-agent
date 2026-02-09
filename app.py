@@ -3,14 +3,11 @@ import sys
 import boto3
 from dotenv import load_dotenv
 from strands import Agent
-from strands import session
-from strands.session import FileSessionManager, session_manager
+from strands.session import FileSessionManager
 from strands.models import BedrockModel
 from strands_tools import (
     file_read,
-    editor,
-    shell,
-    think
+    shell
 )
 
 load_dotenv()
@@ -53,9 +50,7 @@ agent = Agent(
     ),
     tools=[
         file_read, 
-        # editor, # remove comment if you allow agent to edit your files
-        shell, 
-        think
+        shell,
     ],
     system_prompt=(
         "You are an excellent dewvelop assistant that runs localy"
@@ -65,6 +60,6 @@ agent = Agent(
 
 if __name__ == "__main__":
     if len(sys.argv) > 1:
-        agent.run(sys.argv[1])
+        agent(sys.argv[1])
     else:
-        agent.run("help")
+        agent("help")
